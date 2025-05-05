@@ -1,34 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Layout from './components/Layout';
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import CategoryPage from './components/CategoryPage';
+import EventPage from './components/EventPage';
+import Dashboard from './components/Dashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [events, setEvents] = useState();
+
+  const getEvents = async () => {
+    fetch("https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv")
+    .then((response) => response.json())
+    .then((data) => setEvents(data._embedded?.events))
+    .catch((error) => console.error("Skjedde noe feil ved fetch", error));
+  };
+
+  useEffect(() => {
+    getEvents();
+    console.log("State", events)
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+   <Layout>
+    <Routes>
+      <Route path="/" element={<Home setEvents={setEvents} events={events} />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/category/:slug" element={<CategoryPage />} />
+      <Route path="/event/:id" element={<EventPage />} /> 
+    </Routes>
+   </Layout>
   )
 }
 

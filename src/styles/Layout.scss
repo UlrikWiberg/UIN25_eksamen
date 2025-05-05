@@ -1,0 +1,15 @@
+#root {
+    width: 100%;
+}
+
+header {
+    nav {
+        display: flex;
+        justify-content: start;
+        gap: 1rem;
+
+        a {
+            color: #fff;
+        }
+    }
+}
