@@ -7,7 +7,7 @@ export default function EventCard({event}) {
             <h3>{event.name}</h3>
             <p>{event.id}</p>
             <img src={event.images?.[0]?.url} alt={event.name} />
-            <Link to={`event/${event.id}`}>Les mer her</Link>
+            <Link to={`/event/${event.id}`}>Les mer her</Link>
         </article>
     )
 }

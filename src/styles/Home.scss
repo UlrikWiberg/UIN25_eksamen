@@ -1,6 +1,25 @@
-.hovedattraksjoner {
-    img{
-        height: 200px;
-        width: 300px;
+main {
+    display: flex;
+    flex-wrap: wrap;
+
+    .hovedattraksjoner {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        
+        h3 {
+            font-size: 20px;
+        }
+        
+        img {
+            height: 200px;
+            width: 300px;
+        }
+        
+        a {
+            color: white;
+        }
+        
     }
 }
+

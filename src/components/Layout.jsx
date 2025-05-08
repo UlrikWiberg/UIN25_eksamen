@@ -5,13 +5,13 @@ export default function Layout({ children }) {
     return(
         <>
             <header>
-                <nav>
-                    <Link to="/">Hjem</Link>
-                    <Link to="/category/music">Musikk</Link>
-                    <Link to="/category/sports">Sport</Link>
-                    <Link to="/category/arts">Teater/Show</Link>
-                    <Link to="Dashboard">Logg inn</Link>
-                </nav>
+                <Link to="/">BilletLyst</Link>
+                    <nav>
+                        <Link to="/category/music">Musikk</Link>
+                        <Link to="/category/sports">Sport</Link>
+                        <Link to="/category/arts">Teater/Show</Link>
+                    </nav>
+                <Link to="/dashboard">Logg inn</Link>
             </header>
             {children}
             <footer>

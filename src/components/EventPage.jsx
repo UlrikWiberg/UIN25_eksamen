@@ -1,20 +1,44 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ArtistCard from "./ArtistCard";
+import "../styles/EventPage.scss"
 
-export default function EventPage(){
-    const { id } = useParams();
-    const [event, setEvent] = useState();
+export default function EventPage() {
+  const { id } = useParams();
+  const [event, setEvent] = useState();
+  const [artists, setArtists] = useState([]);
 
-    const getEvent = async () => {
-        fetch(`https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv`)
-        .then((response) => response.json())
-        .then((data) => setEvent(data))
-        .catch((error) =>
-        console.error("feil under eventfetch", error));
-    };
+  const getEvent = async () => {
+    try {
+      const res = await fetch(
+        `https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv`
+      );
+      const data = await res.json();
+      setEvent(data);
 
-    useEffect(() => {
-        getEvent();
-    }, [id]);
-    return <h1>{event?.name}</h1>
+      const attractions = data._embedded?.attractions || [];
+      setArtists(attractions);
+    } catch (error) {
+      console.error("Feil under eventfetch", error);
+    }
+  };
+
+  useEffect(() => {
+    getEvent();
+  }, [id]);
+
+  return (
+    <>
+      {artists.length > 0 ? (
+        <section className="artists">
+          {artists.map((artist) => (
+            <ArtistCard artist={artist} key={artist.id} />
+          ))}
+        </section>
+      ) : (
+        <p>Laster artister...</p>
+      )}
+    </>
+  );
 }
+

@@ -13,7 +13,7 @@ function App() {
   const [events, setEvents] = useState();
 
   const getEvents = async () => {
-    fetch("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv")
+    fetch("https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv")
     .then((response) => response.json())
     .then((data) => setEvents(data._embedded?.events))
     .catch((error) => console.error("Skjedde noe feil ved fetch", error));
@@ -21,8 +21,11 @@ function App() {
 
   useEffect(() => {
     getEvents();
+  }, []); 
+
+  useEffect(() => {
     console.log("State", events)
-  }, [])
+  }, [events]);
 
   return (
    <Layout>

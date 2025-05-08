@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import "../styles/Home.scss"
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const [mainAttractions, setMainAttractions] = useState([]);
-
+//"K8vZ917K7fV"
     const attractionIds = [
-        "K8vZ917K7fV", 
-        "K8vZ917_YJf", 
-        "K8vZ917bJC7",
-        "K8vZ917oWOV" 
+        "Z698xZb_Z16v7eGkFy", 
+        "Z698xZb_Z17q339", 
+        "Z698xZb_Z17qfao",
+        "Z698xZb_Z16vfkqIjU" 
     ];
 
     const getMainAttractions = async () => {
         try {
             const promises = attractionIds.map(id =>
-                fetch(`https://app.ticketmaster.com/discovery/v2/attractions/${id}.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv`)
+                fetch(`https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv`)
                     .then(res => res.json())
             );
             const results = await Promise.all(promises);
@@ -35,6 +36,7 @@ export default function Home() {
                     <h3>{attraction.name}</h3>
                     <img src={attraction.images?.[0]?.url} alt={attraction.name} />
                     <p>{attraction.classifications?.[0]?.genre?.name}</p>
+                    <Link to={`event/${attraction.id}`}>Les mer her</Link>
                 </article>
             ))}
         </main>

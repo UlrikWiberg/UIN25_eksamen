@@ -3,13 +3,18 @@
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
     nav {
         display: flex;
-        justify-content: space-between;
         gap: 1rem;
 
         a {
             color: #fff;
         }
+    }
+
+    a {
+        color: #fff;
     }
 }
