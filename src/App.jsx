@@ -13,7 +13,7 @@ function App() {
   const [events, setEvents] = useState();
 
   const getEvents = async () => {
-    fetch("https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv")
+    fetch("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv")
     .then((response) => response.json())
     .then((data) => setEvents(data._embedded?.events))
     .catch((error) => console.error("Skjedde noe feil ved fetch", error));
@@ -27,9 +27,9 @@ function App() {
   return (
    <Layout>
     <Routes>
-      <Route path="/" element={<Home setEvents={setEvents} events={events} />} />
+      <Route path="/" element={<Home events={events} />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/category/:slug" element={<CategoryPage />} />
+      <Route path="/category/:slug" element={<CategoryPage setEvents={setEvents} events={events} />} />
       <Route path="/event/:id" element={<EventPage />} /> 
     </Routes>
    </Layout>

@@ -7,14 +7,16 @@ export default function Layout({ children }) {
             <header>
                 <nav>
                     <Link to="/">Hjem</Link>
-                    <Link to="musikk">Musikk</Link>
-                    <Link to="sport">Sport</Link>
-                    <Link to="teater">Teater/Show</Link>
+                    <Link to="/category/music">Musikk</Link>
+                    <Link to="/category/sports">Sport</Link>
+                    <Link to="/category/arts">Teater/Show</Link>
                     <Link to="Dashboard">Logg inn</Link>
                 </nav>
             </header>
             {children}
-
+            <footer>
+                <p>ATTRIBUTION-LINK</p>
+            </footer>
         </>
     )
 }
