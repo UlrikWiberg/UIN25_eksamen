@@ -1,6 +1,12 @@
 main {
     display: flex;
     flex-wrap: wrap;
+    text-align: left;
+
+    h1 {
+        width: 100%;
+        font-size: 30px;
+    }
 
     .hovedattraksjoner {
         display: flex;
@@ -20,6 +26,24 @@ main {
             color: white;
         }
         
+    }
+
+    .bysortering {
+        width: 100%;
+
+        h2 {
+            font-size: 30px;
+        }
+    }
+
+    .hjemmeside {
+        display: flex;
+        flex-wrap: wrap;
+
+        h2 {
+            width: 100%;
+            font-size: 30px;
+        }
     }
 }
 
