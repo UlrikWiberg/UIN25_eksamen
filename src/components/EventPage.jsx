@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ArtistCard from "./ArtistCard";
-import EventCard from "./EventCard"; // For visning av relaterte events
+import EventCard from "./EventCard"; 
 import "../styles/EventPage.scss";
 
 export default function EventPage() {
-  const { id } = useParams(); // dette er en event-ID
+  const { id } = useParams(); 
   const [event, setEvent] = useState(null);
   const [artists, setArtists] = useState([]);
   const [tickets, setTickets] = useState([]);
@@ -26,12 +26,18 @@ const getEvent = async () => {
   }
 };
 
-const getTickets = async () => {
-    fetch(`https://app.ticketmaster.com/discovery/v2/attractions.json?&locale=*&id=K8vZ917K7fV&id=K8vZ917_YJf&id=K8vZ917oWOV&id=K8vZ917bJC7&apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv`)
-    .then((response) => response.json())
-    .then((data) => setTickets(data._embedded.attractions))
-    .catch((error) => console.error("skjedde feil ved fetch", error))
+const getTickets = async (artistId) => {
+  try {
+    const res = await fetch(
+      `https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&locale=*&attractionId=${artistId}`
+    );
+    const data = await res.json();
+    setTickets(data._embedded?.events || []);
+  } catch (error) {
+    console.error("Feil ved henting av billetter", error);
+  }
 };
+
 
   
 
@@ -40,9 +46,14 @@ const getTickets = async () => {
   }, [id]);
 
   useEffect(() => {
-    getTickets();
-  }, []);
-
+    if (event) {
+      const attractionId = event._embedded?.attractions?.[0]?.id;
+      if (attractionId) {
+        getTickets(attractionId);
+      }
+    }
+  }, [event]);
+  
   return (
     <>
       {!event ? (
