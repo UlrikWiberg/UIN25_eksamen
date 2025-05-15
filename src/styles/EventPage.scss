@@ -1,4 +1,30 @@
+.event {
+    img {
+        height: 500px;
+        width: 700px
+    }
+}
+
+.tickets {
+    display: flex;
+    flex-wrap: wrap;
+
+    .ticketcard {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        img {
+            height: 200px;
+            width: 300px;
+        }
+    }
+}
+
 .artists {
     display: flex;
     flex-wrap: wrap;
+
+    h2 {
+        width: 100%;
+    }
 }

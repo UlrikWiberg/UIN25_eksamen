@@ -11,7 +11,7 @@ export default function SearchForm({ setSearch, handleClick }) {
     return (
       <form onSubmit={handleSubmit}>
         <label htmlFor="search">Søk her</label>
-        <input type="search" id="search" onChange={handleChange} />
+        <input type="search" id="search" onChange={handleChange} placeholder="findings" />
         <button type="submit">Søk</button>
       </form>
     );

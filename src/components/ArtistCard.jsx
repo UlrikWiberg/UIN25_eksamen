@@ -7,7 +7,6 @@ export default function ArtistCard({ artist }) {
         {artist.images?.[0]?.url && (
           <img src={artist.images[0].url} alt={artist.name} />
         )}
-        <p>{artist.classifications?.[0]?.genre?.name}</p>
       </article>
     );
   }

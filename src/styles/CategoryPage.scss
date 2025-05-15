@@ -1,6 +1,19 @@
-.flex-section {
+.attraksjoner {
     display: flex;
     flex-wrap: wrap;
+
+    h2 {
+        width: 100%;
+    }
+}
+
+.arrangementer {
+    display: flex;
+    flex-wrap: wrap;
+
+    h2 {
+        width: 100%;
+    }
 }
 
 .searchresults {

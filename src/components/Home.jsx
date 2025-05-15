@@ -5,7 +5,7 @@ import EventCard from "./EventCard";
 
 export default function Home({ events }) {
     const [mainAttractions, setMainAttractions] = useState([]);
-    const [city, setCity] = useState(null);
+    const [city, setCity] = useState("Oslo");
     const [cityEvents, setCityEvents] = useState([]);
 
     const getMainAttractions = async () => {

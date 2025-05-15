@@ -10,6 +10,7 @@ export default function CategoryPage() {
   const [result, setResult] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [categoryEvents, setCategoryEvents] = useState([]);
 
   const handleClick = async () => {
     try {
@@ -27,12 +28,23 @@ export default function CategoryPage() {
       const data = await response.json();
       setResult(data._embedded?.attractions || []);
     } catch (error) {
-      console.error("Feil under fetch av kategori", error);
+      console.error("Feil under fetch av kategoriattractions", error);
     }
   };
 
+  const getCategoryEvents = async () => {
+    try {
+      const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&classificationName=${slug}`);
+      const data = await response.json();
+      setCategoryEvents(data._embedded?.events || []);
+    } catch (error) {
+      console.error("Feil under fetch av kategorievents", error);
+    }
+  }
+
   useEffect(() => {
     getData();
+    getCategoryEvents();
   }, [slug]);
 
   return (
@@ -48,9 +60,32 @@ export default function CategoryPage() {
       ) : (
         <>
           <h1>{slug}</h1>
-          <section className="flex-section">
+          <section className="attraksjoner">
+            <h2>Attraksjoner</h2>
             {result.map((item) => (
               <CategoryCard item={item} key={item.id} />
+            ))}
+          </section>
+          <section className="arrangementer">
+            <h2>Arrangementer</h2>
+            {categoryEvents.length > 0 ? (
+              categoryEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))
+            ) : (
+              <p>ingen arrangementer funnet</p>
+            )
+          }
+          </section>
+          <section className="spillesteder">
+            <h2>Spillesteder</h2>
+            {categoryEvents.map((venue) => (
+              <article key={venue.id}>
+                <img src={venue._embedded.venues?.[0]?.images?.[0]?.url} alt={venue.name} />
+                <h3>{venue._embedded.venues?.[0]?.name}</h3>
+                <p>{venue._embedded.venues?.[0]?.country.name}</p>
+                <p>{venue._embedded.venues?.[0]?.city.name}</p>
+              </article>
             ))}
           </section>
         </>
