@@ -73,15 +73,8 @@ const getTickets = async (artistId) => {
           <h2>Festivalpass</h2>
           {tickets.length > 0 ? (
             <section className="tickets">
-                {tickets.map((ticket) => (
-                    <article className="ticketcard" key={ticket.id}>
-                        <img src={ticket.images?.[0]?.url} alt={ticket.name} />
-                        <h3>{ticket.name}</h3>
-                        <p>{ticket._embedded.venues?.[0]?.name}</p>
-                        <p>{new Date(ticket.dates?.start?.dateTime).toLocaleString("no-NO")}</p>
-                        <button>Kjøp</button>
-                        <button>Legg til i ønskeliste</button>
-                    </article>
+                {tickets.map((event) => (
+                  <EventCard key={event.id} event={event} />
                 ))}
             </section>
           ) : (

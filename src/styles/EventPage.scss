@@ -8,16 +8,6 @@
 .tickets {
     display: flex;
     flex-wrap: wrap;
-
-    .ticketcard {
-        display: flex;
-        flex-direction: column;
-        width: 30%;
-        img {
-            height: 200px;
-            width: 300px;
-        }
-    }
 }
 
 .artists {
