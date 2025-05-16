@@ -16,7 +16,33 @@
     }
 }
 
+.spillesteder {
+    display: flex;
+    flex-wrap: wrap;
+
+    h2 {
+        width: 100%;
+    }
+
+    .venuekort {
+        display: flex;
+    flex-direction: column;
+    width: 30%;
+
+    h3 {
+        font-size: 16px;
+        
+    }
+
+    img {
+        height: 200px;
+        width: 300px;
+    }
+    }
+}
+
 .searchresults {
     display: flex;
     flex-wrap: wrap;
 }
+

@@ -9,7 +9,7 @@ export default function Layout({ children }) {
                     <nav>
                         <Link to="/category/music">Musikk</Link>
                         <Link to="/category/sports">Sport</Link>
-                        <Link to="/category/arts">Teater/Show</Link>
+                        <Link to="/category/theatre">Teater/Show</Link>
                     </nav>
                 <Link to="/dashboard">Logg inn</Link>
             </header>

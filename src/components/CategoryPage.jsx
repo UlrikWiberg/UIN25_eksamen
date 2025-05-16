@@ -4,6 +4,7 @@ import CategoryCard from "./CategoryCard";
 import SearchForm from "./SearchForm";
 import EventCard from "./EventCard";
 import "../styles/CategoryPage.scss"
+import FilterForm from "./FilterForm";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -11,20 +12,31 @@ export default function CategoryPage() {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [categoryEvents, setCategoryEvents] = useState([]);
+  const [filterDate, setFilterDate] = useState("");
+  const [filterCountry, setFilterCountry] = useState("");
+  const [filterCity, setFilterCity] = useState("");
 
   const handleClick = async () => {
     try {
-      const response = await fetch(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&keyword=${search}`);
-      const data = await response.json();
-      setSearchResults(data._embedded?.attractions || []);
+      const attractionRes = await fetch(
+        `https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&keyword=${search}&size=10`
+      );
+      const attractionData = await attractionRes.json();
+      setResult(attractionData._embedded?.attractions || []);
+  
+      const eventRes = await fetch(
+        `https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&keyword=${search}&size=10`
+      );
+      const eventData = await eventRes.json();
+      setCategoryEvents(eventData._embedded?.events || []);
     } catch (error) {
-      console.error("Skjedde feil ved fetch av søk", error);
+      console.error("Feil under søk", error);
     }
   };
-
+  
   const getData = async () => {
     try {
-      const response = await fetch(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&classificationName=${slug}`);
+      const response = await fetch(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&classificationName=${slug}&size=10`);
       const data = await response.json();
       setResult(data._embedded?.attractions || []);
     } catch (error) {
@@ -34,21 +46,73 @@ export default function CategoryPage() {
 
   const getCategoryEvents = async () => {
     try {
-      const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&classificationName=${slug}`);
+      const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&classificationName=${slug}&size=10`);
       const data = await response.json();
       setCategoryEvents(data._embedded?.events || []);
     } catch (error) {
       console.error("Feil under fetch av kategorievents", error);
     }
-  }
+  };
 
+  const getFilteredData = async () => {
+    try {
+      const eventRes = await fetch(
+        `https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&size=10` +
+        `&city=${filterCity}` +
+        `&countryCode=${filterCountry}` +
+        (filterDate ? `&startDateTime=${filterDate}T00:00:00Z` : "")
+      );
+      const eventData = await eventRes.json();
+      setCategoryEvents(eventData._embedded?.events || []);
+  
+      const attractionRes = await fetch(
+        `https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&size=10` +
+        `&keyword=${filterCity || filterCountry}`
+      );
+      const attractionData = await attractionRes.json();
+      setResult(attractionData._embedded?.attractions || []);
+    } catch (error) {
+      console.error("Feil under filtrering", error);
+    }
+  };
+  
   useEffect(() => {
     getData();
     getCategoryEvents();
   }, [slug]);
 
+  useEffect(() => {
+    console.log(result);
+    console.log(categoryEvents);
+  }, [])
+
   return (
     <>
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        getFilteredData();}}>
+            <label htmlFor="date">Dato:</label>
+            <input type="date" id="date" value={filterDate} onChange={(e) => setFilterDate(e.target.value)}/>
+            <label htmlFor="country">Land:</label>
+            <select id="country" value={filterCountry} onChange={(e) => setFilterCountry(e.target.value)}>
+              <option value="">Velg et land</option>
+              <option value="NO">Norge</option>
+              <option value="SE">Sverige</option>
+              <option value="De">Tyskland</option>
+              <option value="GB">England</option>
+              <option value="FR">Frankrike</option>
+            </select>
+            <label htmlFor="city">By:</label>
+            <select id="city" value={filterCity} onChange={(e) => setFilterCity(e.target.value)}>
+              <option value="">Velg en by</option>
+              <option value="Oslo">Oslo</option>
+              <option value="Stockholm">Stockholm</option>
+              <option value="Berlin">Berlin</option>
+              <option value="London">London</option>
+              <option value="Paris">Paris</option>
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
       <SearchForm setSearch={setSearch} handleClick={handleClick} />
       {searchResults.length > 0 ? (
         <section className="searchresults">
@@ -80,7 +144,7 @@ export default function CategoryPage() {
           <section className="spillesteder">
             <h2>Spillesteder</h2>
             {categoryEvents.map((venue) => (
-              <article key={venue.id}>
+              <article key={venue.id} className="venuekort">
                 <img src={venue._embedded.venues?.[0]?.images?.[0]?.url} alt={venue.name} />
                 <h3>{venue._embedded.venues?.[0]?.name}</h3>
                 <p>{venue._embedded.venues?.[0]?.country.name}</p>

@@ -1,13 +1,50 @@
-export default function Dashboard(){
-    return (
+import { useState } from "react";
+
+export default function Dashboard() {
+  const [userLogin, setUserLogin] = useState({});
+  const [error, setError] = useState("");
+  const [signedIn, setSignedIn] = useState(false);
+
+  const handleChange = (e) => {
+    const inputName = e.target.name;
+    const inputValue = e.target.value;
+    setUserLogin((prev) => ({ ...prev, [inputName]: inputValue }));
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setSignedIn(true);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.setItem("login", false);
+    setSignedIn(false);
+  };
+
+  return (
+    <>
+      {signedIn ? (
         <>
-        <button>Logg ut</button>
-        <h1>Dashboard</h1>
-        <form>
-            <label htmlFor="username">Brukernavn</label>
-            <input type="username" id="username" placeholder="ulrikw" />
-            <button type="submit">Logg inn</button>
-        </form>
+          <button onClick={handleLogout}>Logg ut</button>
+          <h1>Min side</h1>
         </>
-    )
+      ) : (
+        <>
+          <h1>Logg inn</h1>
+          <form>
+            <label htmlFor="username">Brukernavn</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="ulrikw"
+              name="username"
+              onChange={handleChange}
+            />
+            <button onClick={handleClick}>Logg inn</button>
+          </form>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </>
+      )}
+    </>
+  );
 }

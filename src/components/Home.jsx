@@ -17,7 +17,7 @@ export default function Home({ events }) {
 
     const getCityEvents = async (cityName) => {
         try {
-            const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&locale=*&city=${cityName}`)
+            const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&locale=*&city=${cityName}&size=10`)
             const data = await response.json();
             setCityEvents(data._embedded?.events || []);
         } catch (error) {
@@ -80,7 +80,7 @@ export default function Home({ events }) {
                 <button onClick={() => setCity("Paris")}>Paris</button>
             </article>
             <article className="hjemmeside">
-                <h2>Hva skjer i {city}?</h2>
+                <h2>i {city} kan du oppleve</h2>
                 {cityEvents.length > 0 ? (
                     cityEvents.map((event) => (
                         <EventCard key={event.id} event={event} />
