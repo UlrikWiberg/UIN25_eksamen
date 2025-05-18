@@ -3,6 +3,11 @@ import "../styles/Layout.scss";
 import { useEffect, useState } from "react";
 
 export default function Layout({ children }) {
+    /*på denne siden har jeg en state som er satt til false
+    denne staten sier om en bruker er logget inn eller ikke, og endrer hva som står
+    på linken som fører til dashboard om loggedIn staten er satt til true(at bruker er logget inn)
+    Layouten innholder header og footer som er lik på alle sidene, og hviser hvor alle andre
+    elementer skal legge seg som er ved {children} */
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {

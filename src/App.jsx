@@ -10,6 +10,12 @@ import Dashboard from './components/Dashboard';
 function App() {
   const [mainAttractions, setMainAttractions] = useState([]);
 
+  /*Funksjonen under henter de 4 hoved eventene som skal framstilles på forsiden
+  UseEffect funksjonen gjør at denne funksjonen kjøres hver gang applikasjonenen
+  blir åpnet Under layout komponetet som innholder navigasjonene for nettsiden
+  sender jeg staten disse eventene ligger i til home som er hjemmesiden til applikasjonen
+  Jeg har også ruter til dashboard, kategoriside og event side*/
+
   const getMainAttractions = async () => {
     fetch(`https://app.ticketmaster.com/discovery/v2/events?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&locale=*&id=Z698xZb_Z16v7eGkFy&id=Z698xZb_Z17q339&id=Z698xZb_Z17qfao&id=Z698xZb_Z16vfkqIjU`)
     .then((response) => response.json())

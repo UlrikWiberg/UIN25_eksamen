@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import EventCard from "./EventCard";
 
 export default function Home({ mainAttractions }) {
+    /*På denne siden (hjemmesiden) mapper jeg ut de fire hovedeventene hentet fra App.jsx
+    jeg fetcher også 10 andre eventer fra apiet med en spesifisert bykode og mapper ut disse
+    staten city er satt til oslo som standard, og eventer fra oslo blir derfor fetchet fra apiet
+    bruker kan endre dette ved å endre staten til en av de andre storbyene under bysortering seksjonen
+    de fire hovedeventene har en link som fører videre til eventpage*/
     const [city, setCity] = useState("Oslo");
     const [cityEvents, setCityEvents] = useState([]);
 
