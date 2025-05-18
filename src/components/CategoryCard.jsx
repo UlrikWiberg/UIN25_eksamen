@@ -4,6 +4,9 @@ import solidIcon from "../assets/heart-solid.svg"
 import { useEffect, useState } from "react"
 
 export default function CategoryCard({ item }){
+    /*med categorycard kan jeg mappe ut ulike eventer og attractions på kategoriside
+    med en state som sier om kortet er liked eller ikke, kan jeg toggle mellom et fylt hjerte og et tomt hjerte
+    som viser om bruker har lagt til å ønskeliste */
     const [liked, setLiked] = useState(false);
 
     const storageKey = "likedItems";

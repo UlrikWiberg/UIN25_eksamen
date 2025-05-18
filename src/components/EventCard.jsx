@@ -1,6 +1,8 @@
 import "../styles/EventCard.scss"
 
 export default function EventCard({event}) {
+    /*Et kort som holder informasjon om et event, informasjonen blir mappet
+    ut ifra et prop (event) som blir sent med fra sidene hvor eventkort mappes ut */
     return(
         <article className="eventcard">
             <h3>{event.name}</h3>

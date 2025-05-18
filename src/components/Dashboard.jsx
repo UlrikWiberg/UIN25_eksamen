@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
+    /*på dashboard kan bruker logge inn ved å sette staten signedIn til true
+    dette blir gjort med funksjonen handleclick. hvis bruker er logget inn 
+    får de opp en overskrift dashboard og en knapp til å logge ut */
   const [userLogin, setUserLogin] = useState({});
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false);

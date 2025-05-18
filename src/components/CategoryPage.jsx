@@ -6,6 +6,9 @@ import EventCard from "./EventCard";
 import "../styles/CategoryPage.scss"
 
 export default function CategoryPage() {
+  /*På kategorisiden fremstilles attractions, events og venues fra de ulike kategoriene musikk, sport og teater
+  det er også mulig å søke etter eventer med searchform eller å filterer basert på data, land og by.
+  Attractions og events blir mappet ut med hjelp av CategoryCard mens venues blir mappet ut rett i en artikkel */
   const { slug } = useParams();
   const [result, setResult] = useState([]);
   const [search, setSearch] = useState("");

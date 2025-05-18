@@ -5,6 +5,9 @@ import EventCard from "./EventCard";
 import "../styles/EventPage.scss";
 
 export default function EventPage() {
+  /*jeg bruker useParams på id en til eventet for å fetche riktig event. jeg fetcher også festivalpass 
+  i en anne funksjon basert på attraction id. deretter mapper jeg ut ulik informasjon om eventet som sjanger
+  festivalpass, og artister */
   const { id } = useParams(); 
   const [event, setEvent] = useState(null);
   const [artists, setArtists] = useState([]);
