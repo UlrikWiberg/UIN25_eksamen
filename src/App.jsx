@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
@@ -10,29 +8,29 @@ import EventPage from './components/EventPage';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const [events, setEvents] = useState();
+  const [mainAttractions, setMainAttractions] = useState([]);
 
-  const getEvents = async () => {
-    fetch("https://app.ticketmaster.com/discovery/v2/events.json?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv")
+  const getMainAttractions = async () => {
+    fetch(`https://app.ticketmaster.com/discovery/v2/events?apikey=UlHJiRQNsyx9GOXAmsHGHRSHkLdjsLJv&locale=*&id=Z698xZb_Z16v7eGkFy&id=Z698xZb_Z17q339&id=Z698xZb_Z17qfao&id=Z698xZb_Z16vfkqIjU`)
     .then((response) => response.json())
-    .then((data) => setEvents(data._embedded?.events))
-    .catch((error) => console.error("Skjedde noe feil ved fetch", error));
-  };
+    .then((data) => setMainAttractions(data._embedded?.events))
+    .catch((error) => console.error("skjedde feil i fetch av hoved attrasksjoner", error))
+};
 
   useEffect(() => {
-    getEvents();
-  }, []); 
+    getMainAttractions();
+}, []); 
 
   useEffect(() => {
-    console.log("State", events)
-  }, [events]);
+    console.log("State", mainAttractions)
+  }, [mainAttractions]);
 
   return (
    <Layout>
     <Routes>
-      <Route path="/" element={<Home events={events} />} />
+      <Route path="/" element={<Home mainAttractions={mainAttractions} />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/category/:slug" element={<CategoryPage setEvents={setEvents} events={events} />} />
+      <Route path="/category/:slug" element={<CategoryPage />} />
       <Route path="/event/:id" element={<EventPage />} /> 
     </Routes>
    </Layout>

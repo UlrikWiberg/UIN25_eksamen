@@ -4,7 +4,6 @@ import CategoryCard from "./CategoryCard";
 import SearchForm from "./SearchForm";
 import EventCard from "./EventCard";
 import "../styles/CategoryPage.scss"
-import FilterForm from "./FilterForm";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -133,8 +132,8 @@ export default function CategoryPage() {
           <section className="arrangementer">
             <h2>Arrangementer</h2>
             {categoryEvents.length > 0 ? (
-              categoryEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
+              categoryEvents.map((item) => (
+                <CategoryCard key={item.id} item={item} />
               ))
             ) : (
               <p>ingen arrangementer funnet</p>
@@ -145,7 +144,7 @@ export default function CategoryPage() {
             <h2>Spillesteder</h2>
             {categoryEvents.map((venue) => (
               <article key={venue.id} className="venuekort">
-                <img src={venue._embedded.venues?.[0]?.images?.[0]?.url} alt={venue.name} />
+                <img src={venue._embedded.venues?.[0]?.images?.[0]?.url || venue.images?.[1]?.url} alt={venue.name} />
                 <h3>{venue._embedded.venues?.[0]?.name}</h3>
                 <p>{venue._embedded.venues?.[0]?.country.name}</p>
                 <p>{venue._embedded.venues?.[0]?.city.name}</p>

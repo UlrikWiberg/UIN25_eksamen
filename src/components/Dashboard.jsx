@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [userLogin, setUserLogin] = useState({});
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    const isLoggedIn = sessionStorage.getItem("login") === "true";
+    if (isLoggedIn) {
+        setSignedIn(true);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const inputName = e.target.name;
@@ -13,7 +20,13 @@ export default function Dashboard() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setSignedIn(true);
+    if (userLogin.username) {
+        setSignedIn(true);
+        sessionStorage.setItem("login", "true");
+        setError("")
+    } else {
+        setError("du må skrive inn brukernavn")
+    }
   };
 
   const handleLogout = () => {
